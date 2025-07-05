@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/core/constants/routes_name.dart';
+import 'package:quiz_app/core/theme/theme.dart';
 import 'package:quiz_app/core/utils/app_router.dart';
 
 void main() {
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Quiz',
+      theme: theme,
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: RoutesNames.splash,
 

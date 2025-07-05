@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:quiz_app/core/constants/routes_name.dart';
+import 'package:quiz_app/core/theme/custom_colors.dart';
 
 // Splash Screen
 class SplachScreen extends StatefulWidget {
@@ -23,6 +24,8 @@ class _SplachScreenState extends State<SplachScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Welcome to the quize App.....")));
+    return Scaffold(
+      backgroundColor: middleGreen,
+      body: Center(child: Text("Welcome to the quize App.....",style: Theme.of(context).textTheme.bodyMedium,)));
   }
 }

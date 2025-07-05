@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/core/constants/routes_name.dart';
+import 'package:quiz_app/features/quiz/presentation/screens/home_screen.dart';
 import 'package:quiz_app/splash/splash_screen.dart';
 
 // Routes 
@@ -9,7 +10,7 @@ class AppRouter {
       case RoutesNames.splash:
         return MaterialPageRoute(builder: (context) => SplachScreen(),);
       case RoutesNames.home:
-      return MaterialPageRoute(builder: (context) => Scaffold(body: Center(child: Text('Home Screen'),),),);
+      return MaterialPageRoute(builder: (context) => HomeScreen());
       default:
         return MaterialPageRoute(
           builder: (context) => Scaffold(body: Center(child: Text("Error 404"))),
