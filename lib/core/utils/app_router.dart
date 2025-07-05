@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:quiz_app/core/constants/routes_name.dart';
+import 'package:quiz_app/splash/splash_screen.dart';
 
+// Routes 
 class AppRouter {
-  static Scaffold generateRoute(RouteSettings routeSettings){
-    switch(routeSettings.name){
-      default: 
-        return Scaffold(
-          body: Center(
-            child: Text("Error 404"),
-          ),
+  static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
+    switch (routeSettings.name) {
+      case RoutesNames.splash:
+        return MaterialPageRoute(builder: (context) => SplachScreen(),);
+      case RoutesNames.home:
+      return MaterialPageRoute(builder: (context) => Scaffold(body: Center(child: Text('Home Screen'),),),);
+      default:
+        return MaterialPageRoute(
+          builder: (context) => Scaffold(body: Center(child: Text("Error 404"))),
         );
     }
   }
-  
-  }
+}
