@@ -32,7 +32,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 backgroundColor: middleGreen,
                 automaticallyImplyLeading: false,
                 title: Text(
-                  "${widget.questions.indexOf(state.question) + 1 }/${widget.questions.length}",
+                  "${widget.questions.indexOf(state.question) + 1}/${widget.questions.length}",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 centerTitle: true,
