@@ -9,7 +9,8 @@ import 'package:quiz_app/features/quiz/presentation/cubit/quiz_state.dart';
 
 class QuizScreen extends StatefulWidget {
   final List<QuestionEntity> questions;
-  const QuizScreen({super.key, required this.questions});
+  final String name;
+  const QuizScreen({super.key, required this.questions, required this.name});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -18,6 +19,7 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   String? selectedValue;
   int? selectedIndex;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -64,26 +66,52 @@ class _QuizScreenState extends State<QuizScreen> {
                 child: Column(
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 230,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 15,
-                        horizontal: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        boxShadow: [BoxShadow(blurRadius: 5)],
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                      ),
-                      child: Text(
-                        "Question ${widget.questions.indexOf(state.question) + 1} : ${state.question.question}",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: darkGreen,
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 230,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 15,
+                            horizontal: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            boxShadow: [BoxShadow(blurRadius: 5)],
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
+                          child: Container(
+                            margin: EdgeInsets.only(top: 25),
+                            child: Text(
+                              "Question ${widget.questions.indexOf(state.question) + 1} : ${state.question.question}",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: darkGreen,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Transform.translate(
+                            offset: Offset(0, -30),
+                            child: SizedBox(
+                              height: 60,
+                              width: 60,
+                              child: CircularProgressIndicator(
+                                value: widget.questions
+                                    .indexOf(state.question)
+                                    .toDouble()/widget.questions.length,
+                                color: darkGreen,
+                                backgroundColor: lightGreen,
+                                strokeWidth: 10,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 50),
                     ...state.question.options.map((e) {
@@ -191,7 +219,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Congratulations User,",
+                        "Congratulations ${widget.name},",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

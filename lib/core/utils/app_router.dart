@@ -14,7 +14,9 @@ class AppRouter {
       case RoutesNames.home:
       return MaterialPageRoute(builder: (context) => HomeScreen());
       case RoutesNames.quiz:
-      return MaterialPageRoute(builder: (context) => QuizScreen(questions: routeSettings.arguments as List<QuestionEntity>,),);
+      final args = routeSettings.arguments as Map<String, dynamic>;
+      return MaterialPageRoute(builder: (context) => QuizScreen(questions: args['questions'] as List<QuestionEntity>,
+      name: args['name'] as String,),);
       default:
         return MaterialPageRoute(
           builder: (context) => Scaffold(body: Center(child: Text("Error 404"))),

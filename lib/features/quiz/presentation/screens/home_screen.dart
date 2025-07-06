@@ -8,6 +8,7 @@ import 'package:quiz_app/features/quiz/domain/entities/question_entity.dart';
 // Home Screen
 class HomeScreen extends StatelessWidget {
   final quizRepo = QuizRepositoryImpl();
+  final TextEditingController textEditingController = TextEditingController();
   HomeScreen({super.key});
 
   @override
@@ -28,10 +29,14 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 180,
                 width: 180,
-               
-              child: ClipRRect(
-                borderRadius: BorderRadiusGeometry.circular(95),
-                child: Image.asset("assets/images/quizlogo.jpg",fit: BoxFit.fill,)),
+
+                child: ClipRRect(
+                  borderRadius: BorderRadiusGeometry.circular(95),
+                  child: Image.asset(
+                    "assets/images/quizlogo.jpg",
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.15),
               Row(
@@ -47,8 +52,14 @@ class HomeScreen extends StatelessWidget {
               ),
               SizedBox(height: 10),
               TextField(
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                ),
+                controller: textEditingController,
                 decoration: InputDecoration(
-                  hintText: "John Deo....",
+                  hintText: "Gaurav....",
                   hintStyle: TextStyle(color: Colors.white),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -85,7 +96,10 @@ class HomeScreen extends StatelessWidget {
                     Navigator.pushNamed(
                       context,
                       RoutesNames.quiz,
-                      arguments: questions,
+                      arguments: {
+                        'questions': questions,
+                        'name': textEditingController.text,
+                      },
                     );
                   }
                 },
