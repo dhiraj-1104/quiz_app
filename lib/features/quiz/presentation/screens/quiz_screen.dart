@@ -48,7 +48,7 @@ class _QuizScreenState extends State<QuizScreen> {
                       Icon(Icons.arrow_back_ios_new),
                       SizedBox(width: 8),
                       Text(
-                        "Previous",
+                        "Home",
                         style: TextStyle(
                           color: darkGreen,
                           fontWeight: FontWeight.bold,
@@ -295,7 +295,7 @@ class _QuizScreenState extends State<QuizScreen> {
                       ),
                       SizedBox(height: 10),
                       CustomButton(
-                        text: "Go to Home",
+                        text: "Back to Home",
                         onPressed: () => Navigator.pushReplacementNamed(
                           context,
                           RoutesNames.home,

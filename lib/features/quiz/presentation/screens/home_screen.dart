@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:quiz_app/core/constants/routes_name.dart';
 import 'package:quiz_app/core/theme/custom_colors.dart';
+import 'package:quiz_app/core/utils/dialog.dart';
 import 'package:quiz_app/core/widgets/custome_button.dart';
 import 'package:quiz_app/features/quiz/data/repositories/quiz_repository_impl.dart';
 import 'package:quiz_app/features/quiz/domain/entities/question_entity.dart';
@@ -14,7 +17,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: true,
+      canPop: false,
+      // ignore: deprecated_member_use
+      onPopInvoked: (didpop) async{
+          bool shouldExit = await showExitConfirmationDialog(context);
+          if(shouldExit){
+            exit(0);
+            // SystemNavigator.pop();
+          }
+        },
       child: Scaffold(
         // backgroundcolor
         backgroundColor: middleGreen,
@@ -31,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 180,
                   width: 180,
-
+              
                   child: ClipRRect(
                     borderRadius: BorderRadiusGeometry.circular(95),
                     child: Image.asset(
@@ -61,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   controller: textEditingController,
                   decoration: InputDecoration(
-                    hintText: "Gaurav....",
+                    hintText: "Your Name....",
                     hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -93,9 +104,9 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () async {
                     List<QuestionEntity> questions = await quizRepo
                         .getQuestions();
-
+              
                     if (context.mounted) {
-                      Navigator.pushReplacementNamed(
+                      Navigator.pushNamed(
                         context,
                         RoutesNames.quiz,
                         arguments: {

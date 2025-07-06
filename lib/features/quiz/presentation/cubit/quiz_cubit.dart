@@ -33,7 +33,7 @@ class QuizCubit extends Cubit<QuizState> {
     // print(isCorrect);
     emit(QuizAnswer(isCorrect: isCorrect, context: context));
 
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 1), () {
       _currentIndex = _currentIndex + 1;
       if (_currentIndex < question.length) {
         emit(QuizLoaded(question: question[_currentIndex]));
