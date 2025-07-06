@@ -11,6 +11,7 @@ class QuizInitial extends QuizState {}
 
 class QuizLoaded extends QuizState {
   final QuestionEntity question;
+
   QuizLoaded({required this.question});
 
   @override
@@ -19,7 +20,8 @@ class QuizLoaded extends QuizState {
 
 class QuizAnswer extends QuizState {
   final bool isCorrect;
-  QuizAnswer({required this.isCorrect});
+  final String context;
+  QuizAnswer({required this.isCorrect,required this.context});
 
   @override
   List<Object?> get props => [isCorrect];

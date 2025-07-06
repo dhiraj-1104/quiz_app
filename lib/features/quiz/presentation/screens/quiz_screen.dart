@@ -82,7 +82,7 @@ class _QuizScreenState extends State<QuizScreen> {
                             color: Colors.white,
                           ),
                           child: Container(
-                            margin: EdgeInsets.only(top: 25),
+                            margin: EdgeInsets.only(top: 50),
                             child: Text(
                               "Question ${widget.questions.indexOf(state.question) + 1} : ${state.question.question}",
                               style: TextStyle(
@@ -90,6 +90,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: darkGreen,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
@@ -101,9 +102,11 @@ class _QuizScreenState extends State<QuizScreen> {
                               height: 60,
                               width: 60,
                               child: CircularProgressIndicator(
-                                value: widget.questions
-                                    .indexOf(state.question)
-                                    .toDouble()/widget.questions.length,
+                                value:
+                                    widget.questions
+                                        .indexOf(state.question)
+                                        .toDouble() /
+                                    widget.questions.length,
                                 color: darkGreen,
                                 backgroundColor: lightGreen,
                                 strokeWidth: 10,
@@ -179,25 +182,70 @@ class _QuizScreenState extends State<QuizScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: state.isCorrect == true
-                      ? Center(
-                          child: Text(
-                            "Correct",
-                            style: TextStyle(
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.info_outline,
+                              size: 50,
                               color: darkGreen,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
                             ),
-                          ),
+                            Text(
+                              "Correct",
+                              style: TextStyle(
+                                color: darkGreen,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0,
+                              ),
+                              child: Text(
+                                state.context,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: middleGreen,
+                                  fontSize: 20,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
                         )
-                      : Center(
-                          child: Text(
-                            "Incorrect",
-                            style: TextStyle(
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.info_outline,
+                              size: 50,
                               color: Colors.red,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
                             ),
-                          ),
+                            Text(
+                              "Incorrect",
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0,
+                              ),
+                              child: Text(
+                                state.context,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: middleGreen,
+                                  fontSize: 20,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
                         ),
                 ),
               ),
@@ -219,7 +267,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Congratulations ${widget.name},",
+                        "Congratulations ${widget.name.isEmpty ? 'user' : widget.name},",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

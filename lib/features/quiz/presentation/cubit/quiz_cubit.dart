@@ -17,15 +17,23 @@ class QuizCubit extends Cubit<QuizState> {
   void submitAnswer(int selectedIndex) {
     final currentQuestion = question[_currentIndex];
     final isCorrect = selectedIndex == currentQuestion.correctIndex;
-    if(isCorrect){
-      _score ++;
+    final context = currentQuestion.context[selectedIndex - 1];
+    // print(currentQuestion.context[0]);
+    // print(currentQuestion.context[1]);
+    // print(currentQuestion.context[2]);
+    // print(currentQuestion.context[3]);
+    // print("Selected index is $selectedIndex");
+    // print("The Selected index after adding one ${selectedIndex - 1}");
+    // print(context);
+    if (isCorrect) {
+      _score++;
     }
     // print(selectedIndex);
     // print(currentQuestion.correctIndex);
     // print(isCorrect);
-    emit(QuizAnswer(isCorrect: isCorrect));
+    emit(QuizAnswer(isCorrect: isCorrect, context: context));
 
-    Future.delayed(Duration(seconds: 4), () {
+    Future.delayed(Duration(seconds: 3), () {
       _currentIndex = _currentIndex + 1;
       if (_currentIndex < question.length) {
         emit(QuizLoaded(question: question[_currentIndex]));
