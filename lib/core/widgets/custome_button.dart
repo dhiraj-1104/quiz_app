@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/core/theme/custom_colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  const CustomButton({super.key, required this.text});
+  final VoidCallback onPressed;
+  final Color color;
+  const CustomButton({super.key, required this.text, required this.onPressed, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -11,13 +12,13 @@ class CustomButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 50,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
       
         style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
         textStyle: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
         shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.all(Radius.circular(10))),
-          backgroundColor: orange),
+          backgroundColor: color),
         child: Text(text),
       ),
     );

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/core/constants/routes_name.dart';
 import 'package:quiz_app/core/theme/custom_colors.dart';
 import 'package:quiz_app/core/widgets/custome_button.dart';
+import 'package:quiz_app/features/quiz/data/repositories/quiz_repository_impl.dart';
+import 'package:quiz_app/features/quiz/domain/entities/question_entity.dart';
 
 // Home Screen
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final quizRepo = QuizRepositoryImpl();
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundcolor
       backgroundColor: middleGreen,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -20,13 +25,13 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-              Container(
+              SizedBox(
                 height: 180,
                 width: 180,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(95),
-                ),
+               
+              child: ClipRRect(
+                borderRadius: BorderRadiusGeometry.circular(95),
+                child: Image.asset("assets/images/quizlogo.jpg",fit: BoxFit.fill,)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.15),
               Row(
@@ -69,7 +74,22 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              CustomButton(text: "Start Quiz"),
+              CustomButton(
+                color: orange,
+                text: "Start Quiz",
+                onPressed: () async {
+                  List<QuestionEntity> questions = await quizRepo
+                      .getQuestions();
+
+                  if (context.mounted) {
+                    Navigator.pushNamed(
+                      context,
+                      RoutesNames.quiz,
+                      arguments: questions,
+                    );
+                  }
+                },
+              ),
               SizedBox(height: 10),
             ],
           ),

@@ -26,6 +26,17 @@ class _SplachScreenState extends State<SplachScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: middleGreen,
-      body: Center(child: Text("Welcome to the quize App.....",style: Theme.of(context).textTheme.bodyMedium,)));
+      body: Center(
+        child: SizedBox(
+          height: 180,
+          width: 180,
+
+          child: ClipRRect(
+            borderRadius: BorderRadiusGeometry.circular(95),
+            child: Image.asset("assets/images/quizlogo.jpg", fit: BoxFit.fill),
+          ),
+        ),
+      ),
+    );
   }
 }
