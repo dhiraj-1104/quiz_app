@@ -19,22 +19,46 @@ class HomeScreen extends StatelessWidget {
     return PopScope(
       canPop: false,
       // ignore: deprecated_member_use
-      onPopInvoked: (didpop) async{
-          bool shouldExit = await showExitConfirmationDialog(context);
-          if(shouldExit){
-            exit(0);
-            // SystemNavigator.pop();
-          }
-        },
+      onPopInvoked: (didpop) async {
+        bool shouldExit = await showExitConfirmationDialog(context);
+        if (shouldExit) {
+          exit(0);
+          // SystemNavigator.pop();
+        }
+      },
       child: Scaffold(
+        floatingActionButtonAnimator: FloatingActionButtonAnimator.noAnimation,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton:  Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: CustomButton(
+                  color: orange,
+                  text: "Start Quiz",
+                  onPressed: () async {
+                    List<QuestionEntity> questions = await quizRepo
+                        .getQuestions();
+          
+                    if (context.mounted) {
+                      Navigator.pushNamed(
+                        context,
+                        RoutesNames.quiz,
+                        arguments: {
+                          'questions': questions,
+                          'name': textEditingController.text,
+                        },
+                      );
+                    }
+                  },
+                ),
+        ),
         // backgroundcolor
         backgroundColor: middleGreen,
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -42,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 180,
                   width: 180,
-              
+            
                   child: ClipRRect(
                     borderRadius: BorderRadiusGeometry.circular(95),
                     child: Image.asset(
@@ -97,27 +121,9 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Spacer(),
-                CustomButton(
-                  color: orange,
-                  text: "Start Quiz",
-                  onPressed: () async {
-                    List<QuestionEntity> questions = await quizRepo
-                        .getQuestions();
-              
-                    if (context.mounted) {
-                      Navigator.pushNamed(
-                        context,
-                        RoutesNames.quiz,
-                        arguments: {
-                          'questions': questions,
-                          'name': textEditingController.text,
-                        },
-                      );
-                    }
-                  },
-                ),
-                SizedBox(height: 10),
+            
+               
+                SizedBox(height: MediaQuery.of(context).size.height * 0.25),
               ],
             ),
           ),
