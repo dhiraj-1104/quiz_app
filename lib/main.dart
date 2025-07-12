@@ -19,9 +19,6 @@ class MyApp extends StatelessWidget {
       theme: theme,
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: RoutesNames.splash,
-
     );
   }
 }
-
-

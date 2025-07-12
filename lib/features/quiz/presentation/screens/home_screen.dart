@@ -27,105 +27,125 @@ class HomeScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        floatingActionButtonAnimator: FloatingActionButtonAnimator.noAnimation,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton:  Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: CustomButton(
-                  color: orange,
-                  text: "Start Quiz",
-                  onPressed: () async {
-                    List<QuestionEntity> questions = await quizRepo
-                        .getQuestions();
-          
-                    if (context.mounted) {
-                      Navigator.pushNamed(
-                        context,
-                        RoutesNames.quiz,
-                        arguments: {
-                          'questions': questions,
-                          'name': textEditingController.text,
-                        },
-                      );
-                    }
-                  },
-                ),
-        ),
         // backgroundcolor
         backgroundColor: middleGreen,
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-                SizedBox(
-                  height: 180,
-                  width: 180,
-            
-                  child: ClipRRect(
-                    borderRadius: BorderRadiusGeometry.circular(95),
-                    child: Image.asset(
-                      "assets/images/quizlogo.jpg",
-                      fit: BoxFit.fill,
-                    ),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                      ),
+                      SizedBox(
+                        height: 180,
+                        width: 180,
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadiusGeometry.circular(95),
+                          child: Image.asset(
+                            "assets/images/quizlogo.jpg",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
+                            child: Text(
+                              "Enter your Name.",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          decoration: TextDecoration.none,
+                        ),
+                        controller: textEditingController,
+                        decoration: InputDecoration(
+                          hintText: "Your Name....",
+                          hintStyle: TextStyle(color: Colors.white),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.25,
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        "Enter your Name.",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                TextField(
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    decoration: TextDecoration.none,
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 10,
                   ),
-                  controller: textEditingController,
-                  decoration: InputDecoration(
-                    hintText: "Your Name....",
-                    hintStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
+                  child: CustomButton(
+                    color: orange,
+                    text: "Start Quiz",
+                    onPressed: () async {
+                      List<QuestionEntity> questions = await quizRepo
+                          .getQuestions();
+
+                      if (context.mounted) {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesNames.quiz,
+                          arguments: {
+                            'questions': questions,
+                            'name': textEditingController.text,
+                          },
+                        );
+                      }
+                    },
                   ),
                 ),
-            
-               
-                SizedBox(height: MediaQuery.of(context).size.height * 0.25),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

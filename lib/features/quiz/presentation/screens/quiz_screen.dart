@@ -28,26 +28,6 @@ class _QuizScreenState extends State<QuizScreen> {
         builder: (context, state) {
           if (state is QuizLoaded) {
             return Scaffold(
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-              floatingActionButton: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: CustomButton(
-                        text: "Next",
-                        color: darkGreen,
-                        onPressed: () {
-                          if (selectedIndex != null) {
-                            context.read<QuizCubit>().submitAnswer(
-                              selectedIndex!,
-                            );
-                          } else {
-                            // Show an alert
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Please select an option")),
-                            );
-                          }
-                        },
-                      ),
-              ),
               // ignore: deprecated_member_use
               backgroundColor: middleGreen,
               appBar: AppBar(
@@ -79,99 +59,134 @@ class _QuizScreenState extends State<QuizScreen> {
                   ),
                 ),
               ),
-              body: Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.07),
-                      Stack(
-                        clipBehavior: Clip.none,
+              body: Stack(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.all(20),
+                    child: SingleChildScrollView(
+                      child: Column(
                         children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 230,
-                            padding: EdgeInsets.symmetric(
-                              vertical: 15,
-                              horizontal: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              boxShadow: [BoxShadow(blurRadius: 5)],
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                            ),
-                            child: Container(
-                              margin: EdgeInsets.only(top: 50),
-                              child: Text(
-                                "Question ${widget.questions.indexOf(state.question) + 1} : ${state.question.question}",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: darkGreen,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.07,
                           ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Transform.translate(
-                              offset: Offset(0, -30),
-                              child: SizedBox(
-                                height: 60,
-                                width: 60,
-                                child: CircularProgressIndicator(
-                                  value:
-                                      (widget.questions
-                                          .indexOf(state.question) 
-                                          .toDouble() /
-                                      widget.questions.length),
-                                  color: darkGreen,
-                                  backgroundColor: lightGreen,
-                                  strokeWidth: 10,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 50),
-                      ...state.question.options.map((e) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(vertical: 5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                          ),
-                          child: Column(
+                          Stack(
+                            clipBehavior: Clip.none,
                             children: [
-                              RadioListTile(
-                                value: e,
-                                groupValue: selectedValue,
-                                onChanged: (value) {
-                                  selectedValue = value;
-                                  selectedIndex =
-                                      state.question.options.indexOf(
-                                        selectedValue as String,
-                                      ) +
-                                      1;
-                  
-                                  // print(selectedIndex);
-                  
-                                  setState(() {});
-                                },
-                                title: Text(e),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 230,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  horizontal: 10,
+                                ),
+                                decoration: BoxDecoration(
+                                  boxShadow: [BoxShadow(blurRadius: 5)],
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                ),
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 50),
+                                  child: Text(
+                                    "Question ${widget.questions.indexOf(state.question) + 1} : ${state.question.question}",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: darkGreen,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Transform.translate(
+                                  offset: Offset(0, -30),
+                                  child: SizedBox(
+                                    height: 60,
+                                    width: 60,
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          (widget.questions
+                                              .indexOf(state.question)
+                                              .toDouble() /
+                                          widget.questions.length),
+                                      color: darkGreen,
+                                      backgroundColor: lightGreen,
+                                      strokeWidth: 10,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                        );
-                      }),
-                      SizedBox(height:50)
-                    ],
+                          SizedBox(height: 50),
+                          ...state.question.options.map((e) {
+                            return Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                children: [
+                                  RadioListTile(
+                                    value: e,
+                                    groupValue: selectedValue,
+                                    onChanged: (value) {
+                                      selectedValue = value;
+                                      selectedIndex =
+                                          state.question.options.indexOf(
+                                            selectedValue as String,
+                                          ) +
+                                          1;
+
+                                      // print(selectedIndex);
+
+                                      setState(() {});
+                                    },
+                                    title: Text(e),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                          SizedBox(height: 50),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0,
+                        vertical: 10.0,
+                      ),
+                      child: CustomButton(
+                        text: "Next",
+                        color: darkGreen,
+                        onPressed: () {
+                          // print(selectedIndex)
+                          if (selectedIndex != null) {
+                            context.read<QuizCubit>().submitAnswer(
+                              selectedIndex!,
+                            );
+                            selectedIndex = null;
+                          } else {
+                            // Show an alert
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Please select an option"),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           } else if (state is QuizAnswer) {
